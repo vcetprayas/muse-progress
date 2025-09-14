@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Timeline, Highlight } from '@/components/Timeline';
+import { ConfidenceMeter } from '@/components/ConfidenceMeter';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Play, Pause, RotateCcw } from 'lucide-react';
@@ -70,6 +71,7 @@ const formatTime = (seconds: number) => {
 const Index = () => {
   const [selectedHighlight, setSelectedHighlight] = useState<Highlight | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [confidenceScore, setConfidenceScore] = useState(0.72);
 
   const handleHighlightSelect = (highlight: Highlight) => {
     setSelectedHighlight(highlight);
@@ -203,6 +205,45 @@ const Index = () => {
                       </p>
                     </button>
                   ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Confidence Meter */}
+            <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle className="text-foreground">Confidence Score</CardTitle>
+                <CardDescription>Overall interview confidence assessment</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-center">
+                  <ConfidenceMeter score={confidenceScore} />
+                </div>
+                <div className="flex gap-2 justify-center flex-wrap">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => setConfidenceScore(0.3)}
+                    className="border-border/50"
+                  >
+                    Low (30%)
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => setConfidenceScore(0.65)}
+                    className="border-border/50"
+                  >
+                    Medium (65%)
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => setConfidenceScore(0.85)}
+                    className="border-border/50"
+                  >
+                    High (85%)
+                  </Button>
                 </div>
               </CardContent>
             </Card>
